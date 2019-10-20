@@ -46,7 +46,7 @@
 
 ​		· 使用经验还不够成熟
 
-图数据库主要是用来解决关系行数据库的join查询问题，当查询的深度很深时，MySQL的查询能力很明显不如图数据库，Neo4j是一个原生的图数据库，通过基于图数据结构存储数据，在深度为3时，Mysql的查询能力差不多是Neo4j的1/30；
+图数据库主要是用来解决关系行数据库的join查询问题，当查询的深度很深时，MySQL的查询能力很明显不如图数据库，Neo4j是一个原生的图数据库，通过基于图数据结构存储数据，在深度为3时，Mysql的查询能力差不多是Neo4j的1/30，**同时Neo4j支持ETL工具**；
 
 **初学者向导**
 
@@ -62,7 +62,7 @@ localhost：7474   username：neo4j /password：neo4j -> change pssword= new_psw
 
 **Neo4j的查询语言Cypher**
 
-```SQL
+```cypher
 SET 新添属性
 DELETE 删除顶点
 MERGE 创建节点并建立关系
@@ -82,7 +82,7 @@ MERGE （d: City {id: row.id , name: row.name, longitude: toFloat(row.longitude)
 MERGE|CREATE (d) -[r:BELONG{created_by:"shufang"}]->(c)  ## 建立连接，尽量不用CREATE代替MERGE，能用MERGE代替CREATE
 ```
 
-```sql
+```cypher
 关键字： CREATE、MERGE、MATCH、 DELETE、 RETURN、 SET 、 LOAD、CSV、 WITH、HEADERS、 AS...
 (:Person) -[:LIVES_IN]-> (:City) -[:PART_OF]-> (:Country)  ## 表示关系
 
@@ -107,3 +107,60 @@ ON CREATE SET A.NAME= "HELLO"
 RETURN C.NAME,B
 ```
 
+##### · Neo4j整合项目
+
+Neo4j得到合作伙伴，用户和社区贡献者提供的丰富的库，工具，驱动程序和指南生态系统的支持。我们想概述可用的内容并链接到原始资源。我们尝试将重点放在这里的免费解决方案上，并提供指向商业选项的链接。
+
+以下地址涵盖了各种通过CSV文件导数据到NEO4J的使用方法，同时介绍了各种工具，以及Cypher方式的导入：
+
+https://neo4j.com/developer/guide-import-csv/  
+
+`Neo4j`除了支持`CSV`的资料汇入，通过`LOAD CSV WITH HEADERS  FROM  "" AS ROW`，同时还支持以下的项目整合：
+
+- [Neo4j和Apache Spark](https://neo4j.com/developer/integration/apache-spark)
+- [Neo4j和Elastic {Search}](https://neo4j.com/developer/integration/elastic-search)
+- [Neo4j和MongoDB](https://neo4j.com/developer/integration/mongodb)
+- [Neo4j和Cassandra](https://neo4j.com/developer/integration/cassandra)
+- [Neo4j和Docker](https://neo4j.com/developer/integration/docker)
+
+
+
+##### · Neo4j与关系型数据比较
+
+```java
+SQL 与 Cypher 的比较:
+1.SQL需要频繁的join、而Cypher不需要，只需要做简单的MATCH操作WHERE操作就行，代码量更少
+2.Cypher相对于SQL查询效率要更高
+3.SQL与Cypther同时都支持JDBC的接口，Cypher的JDBC接口代码简单实现如下：
+Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
+
+String query =
+    "MATCH (:Person {name:{1}})-[:EMPLOYEE]-(d:Department) RETURN d.name as dept";
+try (PreparedStatement stmt = con.prepareStatement(QUERY)) {
+    stmt.setString(1,"John");
+    ResultSet rs = stmt.executeQuery();
+    while(rs.next()) {
+        String department = rs.getString("dept");
+        ....
+    }
+}
+```
+
+**SQL Statement**
+
+```SQL
+SELECT name FROM Person
+LEFT JOIN Person_Department
+  ON Person.Id = Person_Department.PersonId
+LEFT JOIN Department
+  ON Department.Id = Person_Department.DepartmentId
+WHERE Department.name = "IT Department"
+```
+
+**Cypher Statement**
+
+```cypher
+MATCH (p:Person)-[:WORKS_AT]->(d:Dept)   ## 关系，有点类似于scala中的模式匹配
+WHERE d.name = "IT Department"    ## filter
+RETURN p.name     ## 返回
+```
