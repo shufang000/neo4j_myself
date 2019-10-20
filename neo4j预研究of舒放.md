@@ -18,7 +18,7 @@
 | 列式存储数据库   | Hbase   |
 | 图数据库         | Neo4j等 |
 
-​	**nosql的有优点：**
+​	**nosql的有优点：**（常用的nosql底层都是基于集合的）
 
 ​		· 适用于半结构化数据（XML、JSON）
 
@@ -75,7 +75,7 @@ MATCH｜MERGE(c:Country {id: 668 ,name: "China"}) ## 先匹配到,然后再添�
 DELETE c
 SET c.ename = "zhongguo" 
 -----------
-同时可以对接EXCEL倒入数据到库中,并关联已经存在的
+同时可以对接EXCEL倒入数据到库中,并关联已经存在的 toInteger（） toFloat（） datatime（）
 .csv文件必须在neo4j的指定目录.../import 下面
 LOAD CSV WITH HEADERS FROM "file:///xxxx.csv" as row   ## row 类似于别名，一列一列的读取CSV中的数据
 MATCH（c: Country {id: 668, name: "China", ename: "zhongguo"}）
@@ -119,10 +119,16 @@ https://neo4j.com/developer/guide-import-csv/
 
 `Neo4j`除了支持`CSV`的资料汇入，通过`LOAD CSV WITH HEADERS  FROM  "" AS ROW`，同时还支持以下的项目整合：
 
-- [Neo4j和Apache Spark](https://neo4j.com/developer/integration/apache-spark)
+- [Neo4j和Apache Spark](spark整合适用于更大的数据集dataSet)
+
+  https://neo4j.com/developer/apache-spark/ ## neo4j(from) -> spark（GraphX） -> neo4j(to)
+
 - [Neo4j和Elastic {Search}](https://neo4j.com/developer/integration/elastic-search)
+
 - [Neo4j和MongoDB](https://neo4j.com/developer/integration/mongodb)
+
 - [Neo4j和Cassandra](https://neo4j.com/developer/integration/cassandra)
+
 - [Neo4j和Docker](https://neo4j.com/developer/integration/docker)
 
 
@@ -166,3 +172,235 @@ MATCH (p:Person)-[:WORKS_AT]->(d:Dept)   ## 关系，有点类似于scala中的�
 WHERE d.name = "IT Department"    ## filter
 RETURN p.name     ## 返回
 ```
+
+
+
+##### 将NoSQL知识转换为图形
+
+- 计算平均收入？询问**关系数据库**。
+- 建立购物车？使用**键值存储数据库**。
+- 是否存储结构化产品信息？存储为**文档数据库**。
+- 描述用户如何从A点到达B点？按照**图数据库**。
+
+下图显示了每种数据库类型如何在测量深度和大小的频谱上叠加。虽然键值存储可以处理大量数据，但它们是为数据的高级视图（低深度）而设计的。图形数据库保留最小化的大小，即使比其他类型的数据库具有更大的数据深度也是如此。其他类型的数据库介于这些范围之间。
+
+![]()
+
+
+
+##### Neo4j组件介绍
+
+- Neo4j图形数据库–我们的核心图形数据库，用于存储和检索连接的数据。有[两个版本](https://neo4j.com/licensing/) -社区版和企业版。我们平台中的所有内容都与数据库中存储的数据进行交互。
+- [Neo4j Desktop](https://neo4j.com/developer/neo4j-desktop/) –用于管理Neo4j本地实例的应用程序。免费下载包括Neo4j企业版许可证。
+- [Neo4j浏览器](https://neo4j.com/developer/neo4j-browser/) –在线浏览器界面，用于查询和查看数据库中的数据。使用Cypher查询语言的基本可视化功能。
+- [Neo4j Bloom](https://neo4j.com/bloom/) –业务用户的可视化工具，不需要任何代码或编程技能即可查看和分析数据。[文档](https://neo4j.com/docs/bloom-user-guide/current/)也是我们的文档部分找到。
+
+
+
+##### Neo4j ETL 工具
+
+许多人希望将其关系系统中的数据导入Neo4j。开发Neo4j ETL工具是为了使此初始导入变得简单。它从任何关系数据库中提取模式，并允许您将其转换为所需的图模式。然后，它将以批量或在线模式将数据导入图形中。您无需了解Cypher即可使用此工具，它可以处理所有繁重的工作。这使您可以浏览已经知道为图形的数据集。
+
+**ETL-Tool Graph App**、
+
+安装使用指南：https://neo4j.com/developer/neo4j-etl/
+
+```
+可用性和安装
+ETL-Tool Graph App可以通过 https://install.graphapp.io 安装到Neo4j Desktop中。
+
+创建项目和数据库实例后，需要转到Graph ApplicationsNeo4j Desktop中的选项卡，将https://r.neo4j.com/neo4j-etl-appNeo4j ETL工具的URL 复制并粘贴到安装框中，然后单击Install按钮。
+```
+
+ETL工具功能介绍：
+
+- Neo4j Desktop中的Neo4j-ETL Graph App
+- 管理多个RDBMS连接
+- 从关系数据库中自动提取数据库元数据
+- 推导图模型
+- 直观地编辑标签，关系类型，属性名称和类型
+- 将当前模型可视化为图形
+- 坚持映射为json
+- 从关系数据库中检索相关的CSV数据
+- 运行批量或在线导入
+- 将MySQL，PostgreSQL捆绑在一起，允许Neo4j Enterprise使用自定义JDBC驱动程序
+
+![]()
+
+
+
+##### APOC（awesome procedures on Cypher ),具体安装如下链接：
+
+https://neo4j.com/developer/neo4j-apoc/
+
+apoc可以用来导入各种数据.csv .json .xml .jdbc .xxx
+
+
+
+
+
+##### //graph algorithms 图算法
+
+//TODO
+
+
+
+##### //graphQL 、Grandstack是一个平台，无缝集成了jscript
+
+​	grand可以将带注释的graphsql转化成单个cypher执行
+
+```java
+type Movie {
+    title: ID!
+    released: Int
+    tagline: String
+
+    actors: [Person] @relation(name:"ACTED_IN", direction:IN)
+
+    director: Person @relation(name:"DIRECTED", direction:IN)
+
+    recommendation(first:Int = 3): [Movie]
+      @cypher(statement:"MATCH (this)<-[r1:REVIEWED]-(:User)-[r2:REVIEWED]->(reco:Movie)
+                         WHERE 3 <= r1.stars <= r2.stars
+                         RETURN reco, sum(r2.stars) as rating ORDER BY rating DESC")
+}
+
+interface Person {
+    name: ID!
+    born: Int
+}
+
+type Actor extends Person {
+    name: ID!
+    born: Int
+
+    movies: [Movie] @relation(name:"ACTED_IN")
+}
+
+type Director extends Person {
+    name: ID!
+    born: Int
+
+    movies: [Movie] @relation(name:"DIRECTED")
+}
+
+type Mutations {
+    directed(movie:ID! director:ID!) : String
+      @cypher(statement:"MATCH (m:Movie {title: $movie}), (d:Person {name: $director})
+                         MERGE (d)-[:DIRECTED]->(m)")
+}
+schema {
+   mutations: Mutations
+}
+
+```
+
+**GrandStack、GraphQL架构原理**：
+
+![](/Users/shufang/Desktop/neo4j_myself/pics/grandstack_architecture.png)
+
+##### Neo4j可视化工具和产品
+
+可视化能够直观的带来价值，所以需要可视化
+
+Neo4j可视化工具：
+
+​	· Neo4j Browser（开发者）
+
+​	· **Neo4j Bloom** （是一种商业许可产品，主要为非开发人员设计的，可以用自然语言进行查询）
+
+
+
+##### Neo4j支持java开发
+
+https://neo4j.com/docs/java-reference/3.5/javadocs/ ## javaAPI地址
+
+##### Neo4j‘s javaDriver代码示意
+
+```xml
+maven依赖
+<dependencies>
+    <dependency>
+        <groupId>org.neo4j.driver</groupId>
+        <artifactId>neo4j-java-driver</artifactId>
+        <version>1.5.2</version>
+    </dependency>
+</dependencies>
+```
+
+```java
+import org.neo4j.driver.v1.*;
+
+/**
+ * @ ClassName HelloWorldExample
+ * @ Author shufang
+ * @ Descripetion
+ * @ Date 2019/10/20 21:34
+ * @ Version 1.0
+ */
+
+public class HelloWorldExample implements AutoCloseable {
+    private final Driver driver;
+
+    public HelloWorldExample(String uri, String user, String password) {
+        //1.获取驱动对象
+        driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
+    }
+
+    @Override
+    public void close() throws Exception {
+        driver.close();
+    }
+
+
+    //创建会话以及事务
+    public void printGreeting(final String message) {
+        try (Session session = driver.session()) {
+            String greeting = session.writeTransaction(new TransactionWork<String>() {
+                @Override
+                public String execute(Transaction tx) {
+                    StatementResult result = tx.run("CREATE (a:Greeting) " +
+                                    "SET a.message = $message " +
+                                    "RETURN a.message + ', from node ' + id(a)",
+                            Values.parameters("message", message));
+                    return result.single().get(0).asString();
+                }
+            });
+            System.out.println(greeting);
+        }
+    }
+
+    public static void main(String... args) throws Exception {
+        try (HelloWorldExample greeter = new HelloWorldExample("bolt://localhost:7687", "neo4j", "lanSHU19920725")) {
+            greeter.printGreeting("hello, world");
+        }
+    }
+}
+```
+
+| Cypher type     | Java type                           |
+| :-------------- | :---------------------------------- |
+| `String`        | `String`                            |
+| `Integer`       | `Long`                              |
+| `Float`         | `Double`                            |
+| `Boolean`       | `Boolean`                           |
+| `Point`         | `org.neo4j.graphdb.spatial.Point`   |
+| `Date`          | `java.time.LocalDate`               |
+| `Time`          | `java.time.OffsetTime`              |
+| `LocalTime`     | `java.time.LocalTime`               |
+| `DateTime`      | `java.time.ZonedDateTime`           |
+| `LocalDateTime` | `java.time.LocalDateTime`           |
+| `Duration`      | `java.time.temporal.TemporalAmount` |
+| `Node`          | `org.neo4j.graphdb.Node`            |
+| `Relationship`  | `org.neo4j.graphdb.Relationship`    |
+| `Path`          | `org.neo4j.graphdb.Path`            |
+
+##### neo4j性能调优
+
+https://neo4j.com/docs/operations-manual/current/performance/
+
+##### Neo4j拓展知识
+
+https://neo4j.com/docs/developer-manual/3.4/extending-neo4j/procedures/
+
+//TODO！

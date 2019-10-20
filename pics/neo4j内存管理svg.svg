@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="802px" height="299px" viewBox="0 0 802 299" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>neo4j-memory-management</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="neo4j-memory-management" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <text id="Available-RAM" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="33" y="42">Available RAM</tspan>
+        </text>
+        <rect id="Rectangle-23" stroke="#979797" x="5.5" y="5.5" width="791" height="288"></rect>
+        <rect id="Rectangle-24" fill="#D1EBD4" x="16" y="70" width="183" height="180"></rect>
+        <rect id="Rectangle-24" fill="#BCE9F4" x="207.666667" y="70" width="183" height="180"></rect>
+        <rect id="Rectangle-24" fill="#FCD5C2" x="399.333333" y="70" width="183" height="180"></rect>
+        <rect id="Rectangle-25" fill="#E8F5E9" x="26" y="80" width="80" height="160"></rect>
+        <rect id="Rectangle-25" fill="#E8F5E9" x="113" y="80" width="80" height="160"></rect>
+        <rect id="Rectangle-26" fill="#FDEAE0" x="407" y="80" width="168" height="160"></rect>
+        <text id="OS-reserve" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="102" y="275">OS reserve</tspan>
+        </text>
+        <text id="Page-cache" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="266" y="275">Page cache</tspan>
+        </text>
+        <text id="Heap-space" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="453" y="275">Heap space</tspan>
+        </text>
+        <text id="OS-memory" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="33" y="163">OS memory</tspan>
+        </text>
+        <text id="Lucene-index-cache" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="116.606445" y="158">Lucene index </tspan>
+            <tspan x="137.401367" y="175">cache</tspan>
+        </text>
+        <g id="Group" transform="translate(214.000000, 80.000000)">
+            <rect id="Rectangle-26" fill="#DDF4F9" x="0" y="0" width="80" height="160"></rect>
+            <text id="Cached-graph-data" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+                <tspan x="19.7504439" y="72">Cached </tspan>
+                <tspan x="24.1420455" y="89">graph </tspan>
+                <tspan x="27.9857955" y="106">data</tspan>
+            </text>
+        </g>
+        <g id="Group" transform="translate(302.000000, 80.000000)">
+            <rect id="Rectangle-26" fill="#DDF4F9" x="0" y="0" width="80" height="160"></rect>
+            <text id="Native-index-cache" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+                <tspan x="22.4954723" y="74">Native </tspan>
+                <tspan x="25.0970348" y="91">index</tspan>
+                <tspan x="24.2650036" y="108">cache</tspan>
+            </text>
+        </g>
+        <text id="Query-execution,-gra" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="425.788086" y="148">Query execution, graph </tspan>
+            <tspan x="409.507812" y="165">management and, optionally, </tspan>
+            <tspan x="444.174805" y="182">transaction state</tspan>
+        </text>
+        <rect id="Rectangle-24" fill="#FFF3CD" x="591" y="70" width="183" height="180"></rect>
+        <rect id="Rectangle-26" fill="#FAF5E3" x="598" y="80" width="168" height="160"></rect>
+        <text id="Transaction-state" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="632.772461" y="158">Transaction state</tspan>
+        </text>
+        <text id="Transaction-state" font-family="OpenSans-Regular, Open Sans" font-size="12" font-weight="normal" fill="#333333">
+            <tspan x="632.772461" y="275">Transaction state</tspan>
+        </text>
+    </g>
+</svg>
