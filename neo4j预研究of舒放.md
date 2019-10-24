@@ -404,3 +404,22 @@ https://neo4j.com/docs/operations-manual/current/performance/
 https://neo4j.com/docs/developer-manual/3.4/extending-neo4j/procedures/
 
 //TODO！
+
+
+
+##### Neo4j与spark的GraphX图分析系统的整合
+
+**GraphX**特点：离线计算、批量处理，基于同步的BSP模型（Bulk Sychronous Parallel Computing model，整体同步并行计算模型），这样能保证提升数据处理的吞吐量和规模，但是在速度方面会稍微逊色一筹，目前大规模的图处理框架还有基于**MPI**模型的异步图计算模型**GraphLab** 和同样基于BSP模型的**Giraph**等
+
+除了Neo4j可以与GraphX组合使用外，还有另外的Janusgraph分布式图数据库可以与GraphX进行组合使用，但是janusGraph不是原生的图数据库，基于Hbase存储，这2个数据库都能作为GraphX的持久层。可以存储大规模的图数据。
+
+**Graph**内部提供了三种RDD来对一个有向多重图的属性进行描述：
+
+​	· VertextRDD extends RDD
+
+​	· EdgeEDD[ED,VD] extends RDD
+
+​	· Triplet
+
+
+
